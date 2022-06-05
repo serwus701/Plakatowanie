@@ -1,49 +1,33 @@
 #include <iostream>
-#include <fstream>
 #include <stack>
 
-int findMin(int size, int *howManyPosters, int heightAlreadyChecked) {
-    int min = INT16_MAX;
-    for (int i = 0; i < size; ++i) {
-        if (howManyPosters[i] < min && howManyPosters[i] > heightAlreadyChecked)
-            min = howManyPosters[i];
-    }
-    return min;
-}
-
 int main() {
-    static int howManyBuildings;
-    int howManyPosters = 0;
+    std::ios_base::sync_with_stdio(false);
+    int howManyBuildings;
+    int numberOfPosters = 0;
 
-    std::ifstream input("pla10b.in");
+    std::cin >> howManyBuildings;
+    int previousHeight = -1;
+    int currentHeight;
 
-    input >> howManyBuildings;
-
-    int heights[howManyBuildings];
-
-    for (int i = 0; i < howManyBuildings; i++) {
-    input >> heights[i];
-    input >> heights[i];
-    }
 
     std::stack<int> nonPlacedYetPosters;
 
     for (int i = 0; i < howManyBuildings; ++i) {
-        if (i > 0) {
-            if (heights[i - 1] < heights[i]) {
-                nonPlacedYetPosters.push(heights[i]);
-            }
-
-            while (nonPlacedYetPosters.size() && (heights[i] < nonPlacedYetPosters.top()) > 0) {
-                nonPlacedYetPosters.pop();
-                howManyPosters++;
-            }
-        } else {
-            nonPlacedYetPosters.push(heights[0]);
+        std::cin >> currentHeight;
+        std::cin >> currentHeight;
+        if (previousHeight < currentHeight) {
+            nonPlacedYetPosters.push(currentHeight);
         }
 
+        while (!nonPlacedYetPosters.empty() && (currentHeight < nonPlacedYetPosters.top())) {
+            nonPlacedYetPosters.pop();
+            numberOfPosters++;
+        }
+        if (nonPlacedYetPosters.empty() || currentHeight > nonPlacedYetPosters.top()) {
+            nonPlacedYetPosters.push(currentHeight);
+        }
+        previousHeight = currentHeight;
     }
-
-
-    std::cout << howManyPosters;
+    std::cout << numberOfPosters + nonPlacedYetPosters.size();
 }
