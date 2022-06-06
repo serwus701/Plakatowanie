@@ -3,17 +3,17 @@
 
 int main() {
     std::ios_base::sync_with_stdio(false);
-    int howManyBuildings;
+    int numberOfBuildings;
     int numberOfPosters = 0;
 
-    std::cin >> howManyBuildings;
+    std::cin >> numberOfBuildings;
     int previousHeight = -1;
     int currentHeight;
 
 
     std::stack<int> nonPlacedYetPosters;
 
-    for (int i = 0; i < howManyBuildings; ++i) {
+    for (int i = 0; i < numberOfBuildings; ++i) {
         std::cin >> currentHeight;
         std::cin >> currentHeight;
         if (previousHeight < currentHeight) {
